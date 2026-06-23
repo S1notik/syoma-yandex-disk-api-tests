@@ -43,6 +43,19 @@ public class FolderPutTest extends BaseTest {
                 .body("error", equalTo("DiskPathPointsToExistentDirectoryError"));
     }
 
+    @Test
+    @DisplayName("PUT: создание папки без токена, вывод 401 ошибки")
+    void shouldReturn401WithoutToken() {
+        given()
+                .baseUri("https://cloud-api.yandex.net")
+                .basePath("/v1/disk")
+                .queryParam("path", "test_folder")
+                .when()
+                .put("/resources")
+                .then()
+                .statusCode(401);
+    }
+
     @AfterEach
     void cleanUp() {
         given()
@@ -51,4 +64,6 @@ public class FolderPutTest extends BaseTest {
                 .when()
                 .delete("/resources");
     }
+
+
 }
