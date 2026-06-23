@@ -42,6 +42,19 @@ public class FolderDeleteTest extends BaseTest {
                 .body("error", equalTo("DiskNotFoundError"));
     }
 
+    @Test
+    @DisplayName("DELETE: удаление без токена, вывод 401 ошибки")
+    void shouldReturn401WithoutToken() {
+        given()
+                .baseUri("https://cloud-api.yandex.net")
+                .basePath("/v1/disk")
+                .queryParam("path", "test_folder")
+                .when()
+                .delete("/resources")
+                .then()
+                .statusCode(401);
+    }
+
     @AfterEach
     void cleanUp() {
         given()
